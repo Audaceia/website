@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5,viewport-fit=cover">
+    <title>Audace · AI Strategy &amp; Implementation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        /* Custom Scrollbar - Themed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg, #0a0f14)
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3b7dd8, #c9a45c);
+            border-radius: 4px
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #5a9af0, #d4b06a)
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #3b7dd8 #0a0f14
+        }
+
+        :root {
+            --bg: #0a0f14;
+            --bg2: #0e1219;
+            --sf: #141a22;
+            --sf2: #1a222d;
+            --tx: #f0ede8;
+            --tx2: #c4bfb6;
+            --mt: #7a756d;
+            --nv: #3b7dd8;
+            --nv2: #5a9af0;
+            --gd: #c9a45c;
+            --ln: rgba(255, 255, 255, .06);
+            --gl: rgba(59, 125, 216, .12);
+            --r: 8px
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: var(--tx);
+            background: var(--bg);
+            line-height: 1.8;
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            max-width: 100vw
+        }
+
+        ::selection {
+            background: var(--nv);
+            color: #fff
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            background: rgba(10, 15, 20, .92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--ln)
+        }
+
+        .logo {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.7rem;
+            color: var(--tx);
+            text-decoration: none;
+            letter-spacing: -.02em;
+            transition: opacity .2s
+        }
+
+        .logo:hover {
+            opacity: .7
+        }
+
+        .logo .la {
+            color: var(--nv);
+            font-style: italic
+        }
+
+        .logo .ld {
+            color: var(--gd);
+            font-size: 2rem;
+            line-height: 0
+        }
+
+        .nr {
+            display: flex;
+            align-items: center;
+            gap: 36px
+        }
+
+        .nr a {
+            font-size: .82rem;
+            font-weight: 400;
+            letter-spacing: .03em;
+            color: var(--mt);
+            text-decoration: none;
+            transition: color .2s;
+            position: relative
+        }
+
+        .nr a:not(.nc):not(.bg)::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--tx);
+            transition: width .3s
+        }
+
+        .nr a:not(.nc):not(.bg):hover::after {
+            width: 100%
+        }
+
+        .nr a:hover {
+            color: var(--tx)
+        }
+
+        .nc {
+            background: var(--nv);
+            color: #fff !important;
+            padding: 10px 26px;
+            font-weight: 500;
+            letter-spacing: .04em;
+            border-radius: var(--r);
+            transition: all .25s
+        }
+
+        .nc:hover {
+            background: var(--nv2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(59, 125, 216, .25)
+        }
+
+        .bg {
+            display: none !important;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            flex-direction: column;
+            gap: 5px
+        }
+
+        .bg span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--tx);
+            transition: all .3s
+        }
+
+        .bg.open span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 5px)
+        }
+
+        .bg.open span:nth-child(2) {
+            opacity: 0
+        }
+
+        .bg.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -5px)
+        }
+
+        .mm {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 15, 20, .97);
+            backdrop-filter: blur(20px);
+            z-index: 99;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px
+        }
+
+        .mm.open {
+            display: flex
+        }
+
+        .mm a {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--tx);
+            text-decoration: none;
+            transition: color .2s
+        }
+
+        .mm a:hover {
+            color: var(--nv)
+        }
+
+        .mm .nc {
+            font-family: 'Inter', sans-serif;
+            font-size: .92rem;
+            margin-top: 16px
+        }
+
+        .w {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px
+        }
+
+        .lb {
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gd)
+        }
+
+        .sep {
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: var(--ln)
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .rv.on {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .d1 {
+            transition-delay: .1s
+        }
+
+        .d2 {
+            transition-delay: .2s
+        }
+
+        .d3 {
+            transition-delay: .3s
+        }
+
+        .bp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--nv);
+            color: #fff;
+            padding: .75em 1.8em;
+            font-family: 'Inter', sans-serif;
+            font-size: .88rem;
+            font-weight: 500;
+            letter-spacing: .03em;
+            text-decoration: none;
+            border-radius: var(--r);
+            transition: all .3s cubic-bezier(.22, 1, .36, 1);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap
+        }
+
+        .bp::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .1), transparent);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .bp:hover::before {
+            opacity: 1
+        }
+
+        .bp:hover {
+            background: var(--nv2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59, 125, 216, .25)
+        }
+
+        .bp:active {
+            transform: translateY(0)
+        }
+
+        .bp svg,
+        .bs svg {
+            transition: transform .3s
+        }
+
+        .bp:hover svg,
+        .bs:hover svg {
+            transform: translateX(4px)
+        }
+
+        .bs {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--tx);
+            padding: .75em 1.8em;
+            font-family: 'Inter', sans-serif;
+            font-size: .88rem;
+            font-weight: 400;
+            letter-spacing: .03em;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: var(--r);
+            transition: all .3s;
+            white-space: nowrap
+        }
+
+        .bs:hover {
+            border-color: rgba(255, 255, 255, .35);
+            background: rgba(255, 255, 255, .03);
+            transform: translateY(-2px)
+        }
+
+        .al {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .9rem;
+            font-weight: 500;
+            color: var(--nv);
+            text-decoration: none;
+            transition: gap .3s;
+            position: relative
+        }
+
+        .al::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--nv);
+            transition: width .3s
+        }
+
+        .al:hover::after {
+            width: calc(100% - 22px)
+        }
+
+        .al:hover {
+            gap: 14px
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 0 100px
+        }
+
+        .hero-gw {
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 80%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, var(--gl) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: .6;
+            transition: transform .15s ease-out
+        }
+
+        .hero-c {
+            position: relative;
+            z-index: 1
+        }
+
+        .hero h1 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(2.6rem, 6.5vw, 5.8rem);
+            line-height: 1.06;
+            letter-spacing: -.025em;
+            margin-bottom: 36px;
+            max-width: 850px
+        }
+
+        .hero h1 i {
+            font-style: italic;
+            color: var(--nv);
+            transition: color .3s
+        }
+
+        .hero h1:hover i {
+            color: var(--nv2)
+        }
+
+        .hero-sub {
+            font-size: 1.12rem;
+            color: var(--tx2);
+            max-width: 560px;
+            line-height: 1.75;
+            margin-bottom: 48px
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 48px
+        }
+
+        .hero-note {
+            font-size: .78rem;
+            color: var(--mt)
+        }
+
+        .nr-wrap {
+            display: inline-block;
+            position: relative;
+            height: 1.1em;
+            vertical-align: bottom
+        }
+
+        .nr-word {
+            display: block;
+            position: absolute;
+            left: 0;
+            width: max-content;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity .5s cubic-bezier(.22, 1, .36, 1), transform .5s cubic-bezier(.22, 1, .36, 1);
+            color: var(--gd);
+            font-style: italic
+        }
+
+        .nr-word.active {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .nr-word.exit {
+            opacity: 0;
+            transform: translateY(-100%)
+        }
+
+        .mq {
+            overflow: hidden;
+            padding: 24px 0;
+            background: var(--bg2)
+        }
+
+        .mq-t {
+            display: flex;
+            animation: mqa 30s linear infinite;
+            width: max-content
+        }
+
+        .mq-t:hover {
+            animation-play-state: paused
+        }
+
+        .mq-t span {
+            font-size: .76rem;
+            font-weight: 500;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--mt);
+            white-space: nowrap;
+            padding: 0 28px;
+            transition: color .3s
+        }
+
+        .mq-t span:hover {
+            color: var(--tx)
+        }
+
+        .mq-t span::after {
+            content: '·';
+            margin-left: 28px;
+            color: var(--gd)
+        }
+
+        @keyframes mqa {
+            0% {
+                transform: translateX(0)
+            }
+
+            100% {
+                transform: translateX(-50%)
+            }
+        }
+
+        .ai {
+            padding: 140px 0 120px
+        }
+
+        .ai-g {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start
+        }
+
+        .ai-l .lb {
+            margin-bottom: 24px;
+            display: block
+        }
+
+        .ai-l p {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            line-height: 1.65;
+            color: var(--tx2)
+        }
+
+        .ai-l p em {
+            font-style: italic;
+            color: var(--nv2)
+        }
+
+        .ai-r {
+            padding-top: 8px
+        }
+
+        .ai-r p {
+            font-size: .96rem;
+            color: var(--mt);
+            line-height: 1.8;
+            margin-bottom: 18px
+        }
+
+        .ai-r .qt {
+            margin-top: 36px;
+            padding-left: 20px;
+            border-left: 2px solid var(--gd);
+            transition: border-color .3s
+        }
+
+        .ai-r .qt:hover {
+            border-color: var(--nv)
+        }
+
+        .ai-r .qt p {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 1.08rem;
+            color: var(--tx2);
+            margin-bottom: 6px;
+            line-height: 1.7
+        }
+
+        .ai-r .qt cite {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: .72rem;
+            color: var(--mt)
+        }
+
+        .st {
+            padding: 100px 0;
+            background: var(--bg2);
+            position: relative;
+            overflow: hidden
+        }
+
+        .st-gw {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, var(--gl) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: .3
+        }
+
+        .st-g {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            position: relative;
+            z-index: 1
+        }
+
+        .si {
+            text-align: center;
+            padding: 48px 20px;
+            border-right: 1px solid var(--ln);
+            transition: background .3s
+        }
+
+        .si:last-child {
+            border-right: none
+        }
+
+        .si:hover {
+            background: rgba(59, 125, 216, .04)
+        }
+
+        .sv {
+            font-family: 'EB Garamond', serif;
+            font-size: 3.6rem;
+            color: var(--tx);
+            line-height: 1;
+            margin-bottom: 12px
+        }
+
+        .sl {
+            font-size: .82rem;
+            color: var(--mt);
+            line-height: 1.5
+        }
+
+        .ss {
+            font-size: .62rem;
+            color: rgba(255, 255, 255, .18);
+            margin-top: 14px;
+            font-style: italic
+        }
+
+        .ap {
+            padding: 140px 0 120px
+        }
+
+        .ap h2 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+            line-height: 1.15;
+            letter-spacing: -.02em;
+            max-width: 700px;
+            margin-bottom: 64px
+        }
+
+        .ap h2 i {
+            font-style: italic;
+            color: var(--nv)
+        }
+
+        .ap-g {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px
+        }
+
+        .ap-g p {
+            font-size: .96rem;
+            color: var(--mt);
+            line-height: 1.8;
+            margin-bottom: 16px
+        }
+
+        .ch {
+            padding: 120px 0;
+            background: var(--bg2)
+        }
+
+        .ch-h {
+            margin-bottom: 64px
+        }
+
+        .ch-h .lb {
+            margin-bottom: 20px;
+            display: block
+        }
+
+        .ch-g {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px
+        }
+
+        .ci {
+            padding: 48px 40px;
+            border: 1px solid var(--ln);
+            border-radius: var(--r);
+            transition: all .4s cubic-bezier(.22, 1, .36, 1);
+            position: relative;
+            overflow: hidden
+        }
+
+        .ci::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(59, 125, 216, .05), transparent);
+            opacity: 0;
+            transition: opacity .4s;
+            border-radius: var(--r)
+        }
+
+        .ci:hover::before {
+            opacity: 1
+        }
+
+        .ci:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+            background: var(--sf)
+        }
+
+        .cn {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--nv);
+            margin-bottom: 20px;
+            line-height: 1;
+            transition: transform .3s
+        }
+
+        .ci:hover .cn {
+            transform: scale(1.1)
+        }
+
+        .ci h3 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: 1.25rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: var(--tx)
+        }
+
+        .ci p {
+            font-size: .88rem;
+            color: var(--mt);
+            line-height: 1.7
+        }
+
+        .pr {
+            padding: 140px 0 120px;
+            position: relative
+        }
+
+        .pr-gw {
+            position: absolute;
+            top: 0;
+            right: -10%;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(59, 125, 216, .06) 0%, transparent 70%);
+            pointer-events: none
+        }
+
+        .pr-h {
+            margin-bottom: 80px
+        }
+
+        .pr-h .lb {
+            margin-bottom: 20px;
+            display: block
+        }
+
+        .pr-h h2 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: 2.8rem;
+            letter-spacing: -.015em;
+            max-width: 600px;
+            line-height: 1.15
+        }
+
+        .pr-g {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 48px;
+            position: relative;
+            z-index: 1
+        }
+
+        .pi {
+            transition: transform .4s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .pi:hover {
+            transform: translateY(-4px)
+        }
+
+        .pi .pn {
+            font-family: 'EB Garamond', serif;
+            font-size: 3rem;
+            color: var(--sf2);
+            margin-bottom: 16px;
+            line-height: 1;
+            transition: color .3s
+        }
+
+        .pi:hover .pn {
+            color: var(--nv)
+        }
+
+        .pi h3 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 500;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--tx)
+        }
+
+        .pi p {
+            font-size: .9rem;
+            color: var(--mt);
+            line-height: 1.75
+        }
+
+        .tc {
+            padding: 120px 0;
+            background: var(--bg2)
+        }
+
+        .tc-i {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start
+        }
+
+        .tc-l .lb {
+            margin-bottom: 20px;
+            display: block
+        }
+
+        .tc-l h2 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            line-height: 1.25
+        }
+
+        .tc-l p {
+            font-size: .96rem;
+            color: var(--mt);
+            line-height: 1.8
+        }
+
+        .tg {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 8px
+        }
+
+        .ti {
+            font-size: .78rem;
+            font-weight: 500;
+            color: var(--tx2);
+            border: 1px solid var(--ln);
+            padding: 11px 22px;
+            border-radius: var(--r);
+            transition: all .3s;
+            cursor: default;
+            position: relative;
+            overflow: hidden
+        }
+
+        .ti::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(59, 125, 216, .08);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all .4s
+        }
+
+        .ti:hover::before {
+            width: 200%;
+            height: 200%
+        }
+
+        .ti:hover {
+            border-color: var(--nv);
+            color: var(--nv);
+            transform: translateY(-2px)
+        }
+
+        .tm {
+            padding: 140px 0 120px
+        }
+
+        .tm-i {
+            display: grid;
+            grid-template-columns: .35fr .65fr;
+            gap: 80px;
+            align-items: start
+        }
+
+        .tm-n .big {
+            font-family: 'EB Garamond', serif;
+            font-size: 4.8rem;
+            color: var(--tx);
+            line-height: 1;
+            margin-bottom: 4px
+        }
+
+        .tm-n .bl {
+            font-size: .78rem;
+            color: var(--mt);
+            margin-bottom: 40px
+        }
+
+        .tm-n .qt {
+            padding-left: 20px;
+            border-left: 2px solid var(--gd);
+            margin-top: 8px;
+            transition: border-color .3s
+        }
+
+        .tm-n .qt:hover {
+            border-color: var(--nv)
+        }
+
+        .tm-n .qt p {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 1.08rem;
+            color: var(--tx2);
+            line-height: 1.7;
+            margin-bottom: 6px
+        }
+
+        .tm-n .qt cite {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: .72rem;
+            color: var(--mt)
+        }
+
+        .tm-t p {
+            font-size: .98rem;
+            color: var(--mt);
+            line-height: 1.8;
+            margin-bottom: 20px
+        }
+
+        .tm-t p em {
+            font-style: italic;
+            color: var(--nv2)
+        }
+
+        .ct {
+            padding: 120px 0;
+            background: var(--sf);
+            position: relative
+        }
+
+        .ct-gw {
+            position: absolute;
+            top: -30%;
+            left: 30%;
+            width: 40%;
+            height: 80%;
+            background: radial-gradient(ellipse, var(--gl), transparent 70%);
+            pointer-events: none;
+            opacity: .4
+        }
+
+        .ct-i {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid var(--ln);
+            border-radius: calc(var(--r)*1.5);
+            position: relative;
+            z-index: 1;
+            overflow: hidden
+        }
+
+        .ct-l {
+            padding: 64px 56px;
+            border-right: 1px solid var(--ln);
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .ct-l .lb {
+            margin-bottom: 24px;
+            display: block
+        }
+
+        .ct-l h2 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: 2.6rem;
+            line-height: 1.2;
+            margin-bottom: 20px
+        }
+
+        .ct-l>p {
+            font-size: .98rem;
+            color: var(--mt);
+            margin-bottom: 40px;
+            line-height: 1.75
+        }
+
+        .pk {
+            display: flex;
+            flex-direction: column;
+            gap: 14px
+        }
+
+        .pk span {
+            font-size: .9rem;
+            color: var(--tx2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform .2s, color .2s
+        }
+
+        .pk span:hover {
+            transform: translateX(4px);
+            color: var(--tx)
+        }
+
+        .pk span::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--gd);
+            transition: width .3s
+        }
+
+        .pk span:hover::before {
+            width: 28px
+        }
+
+        .ct-r {
+            padding: 64px 56px
+        }
+
+        .ct-r label {
+            display: block;
+            font-size: .72rem;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--mt);
+            margin-bottom: 8px
+        }
+
+        .ct-r input,
+        .ct-r select,
+        .ct-r textarea {
+            width: 100%;
+            padding: 14px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: .94rem;
+            font-weight: 300;
+            border: none;
+            border-bottom: 1px solid var(--ln);
+            background: transparent;
+            color: var(--tx);
+            outline: none;
+            margin-bottom: 28px;
+            transition: border-color .3s
+        }
+
+        .ct-r input:focus,
+        .ct-r select:focus,
+        .ct-r textarea:focus {
+            border-color: var(--nv)
+        }
+
+        .ct-r select {
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer
+        }
+
+        .ct-r textarea {
+            resize: vertical;
+            min-height: 60px;
+            line-height: 1.6
+        }
+
+        .fr {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px
+        }
+
+        .bsb {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--nv);
+            color: #fff;
+            padding: .75em 1.8em;
+            font-family: 'Inter', sans-serif;
+            font-size: .88rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            border-radius: var(--r);
+            transition: all .3s;
+            margin-top: 12px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .bsb::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .1), transparent);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .bsb:hover::before {
+            opacity: 1
+        }
+
+        .bsb:hover {
+            background: var(--nv2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59, 125, 216, .25)
+        }
+
+        .bsb svg {
+            transition: transform .3s
+        }
+
+        .bsb:hover svg {
+            transform: translateX(4px)
+        }
+
+        .fok {
+            display: none;
+            text-align: center;
+            padding: 80px 20px
+        }
+
+        .fok h3 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: var(--nv)
+        }
+
+        .fok p {
+            font-size: .98rem;
+            color: var(--mt)
+        }
+
+        footer {
+            padding: 48px 0;
+            background: var(--bg)
+        }
+
+        .fg {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center
+        }
+
+        .fb {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.25rem;
+            color: var(--tx)
+        }
+
+        .fb .la {
+            color: var(--nv);
+            font-style: italic
+        }
+
+        .fb .ld {
+            color: var(--gd)
+        }
+
+        .fb small {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: .7rem;
+            color: var(--mt);
+            margin-top: 4px
+        }
+
+        .fl {
+            display: flex;
+            gap: 28px;
+            justify-content: center
+        }
+
+        .fl a {
+            font-size: .72rem;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--mt);
+            transition: color .2s;
+            position: relative
+        }
+
+        .fl a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--tx);
+            transition: width .3s
+        }
+
+        .fl a:hover::after {
+            width: 100%
+        }
+
+        .fl a:hover {
+            color: var(--tx)
+        }
+
+        .frt {
+            text-align: right
+        }
+
+        .frt a {
+            display: block;
+            font-size: .86rem;
+            color: var(--nv);
+            text-decoration: none;
+            margin-bottom: 4px
+        }
+
+        .frt a:hover {
+            color: var(--nv2)
+        }
+
+        .frt span {
+            font-size: .68rem;
+            color: var(--mt)
+        }
+
+        [data-l=en] {
+            display: none !important
+        }
+
+        body.en [data-l=it] {
+            display: none !important
+        }
+
+        body.en [data-l=en] {
+            display: revert !important
+        }
+
+        @media(max-width:1024px) {
+
+            .ai-g,
+            .ap-g,
+            .tc-i,
+            .tm-i,
+            .ct-i {
+                grid-template-columns: 1fr;
+                gap: 48px
+            }
+
+            .ct-l {
+                border-right: none;
+                border-bottom: 1px solid var(--ln)
+            }
+
+            .st-g {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .si:nth-child(2) {
+                border-right: none
+            }
+
+            .si:nth-child(-n+2) {
+                border-bottom: 1px solid var(--ln)
+            }
+
+            .ch-g,
+            .pr-g {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:768px) {
+            nav {
+                padding: 0 20px
+            }
+
+            .nr>a:not(.bg) {
+                display: none
+            }
+
+            .bg {
+                display: flex !important
+            }
+
+            .w {
+                padding: 0 20px
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 100px 0 50px
+            }
+
+            .hero h1 {
+                font-size: 2.4rem
+            }
+
+            .hero-sub {
+                font-size: 1rem
+            }
+
+            .ai {
+                padding: 80px 0 60px
+            }
+
+            .ai-l p {
+                font-size: 1.25rem
+            }
+
+            .st {
+                padding: 60px 0
+            }
+
+            .st-g {
+                grid-template-columns: 1fr
+            }
+
+            .si {
+                border-right: none;
+                border-bottom: 1px solid var(--ln);
+                padding: 32px 20px
+            }
+
+            .si:last-child {
+                border-bottom: none
+            }
+
+            .sv {
+                font-size: 2.8rem
+            }
+
+            .ap {
+                padding: 80px 0 60px
+            }
+
+            .ap-g {
+                grid-template-columns: 1fr;
+                gap: 32px
+            }
+
+            .ch {
+                padding: 80px 0
+            }
+
+            .ch-g {
+                gap: 12px
+            }
+
+            .ci {
+                padding: 32px 28px
+            }
+
+            .pr {
+                padding: 80px 0 60px
+            }
+
+            .pr-h {
+                margin-bottom: 40px
+            }
+
+            .pr-h h2 {
+                font-size: 2.2rem
+            }
+
+            .tc {
+                padding: 80px 0
+            }
+
+            .tc-i {
+                gap: 40px
+            }
+
+            .tm {
+                padding: 80px 0 60px
+            }
+
+            .tm-n .big {
+                font-size: 3.4rem
+            }
+
+            .ct {
+                padding: 80px 0
+            }
+
+            .ct-l,
+            .ct-r {
+                padding: 36px 24px
+            }
+
+            .ct-l h2 {
+                font-size: 2rem
+            }
+
+            .fr {
+                grid-template-columns: 1fr
+            }
+
+            .fg {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 20px
+            }
+
+            .fl {
+                justify-content: center
+            }
+
+            .frt {
+                text-align: center
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: flex-start
+            }
+        }
+
+        @media(max-width:480px) {
+            .hero h1 {
+                font-size: 2rem
+            }
+
+            .hero-sub {
+                font-size: .94rem
+            }
+        }
+
+        /* Extra small screens - perfect mobile fit */
+        @media(max-width:390px) {
+            body {
+                font-size: 16px
+            }
+            .w {
+                padding: 0 16px
+            }
+            nav {
+                padding: 0 16px
+            }
+            .hero h1 {
+                font-size: 1.75rem
+            }
+            .hero {
+                padding: 90px 0 40px
+            }
+            .ct-l, .ct-r {
+                padding: 28px 16px
+            }
+            .ci {
+                padding: 24px 20px
+            }
+            .bp, .bs {
+                font-size: .82rem;
+                padding: .7em 1.4em
+            }
+        }
+
+        /* Safe area insets for notched phones */
+        @supports(padding: env(safe-area-inset-bottom)) {
+            body {
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right)
+            }
+            footer {
+                padding-bottom: calc(48px + env(safe-area-inset-bottom))
+            }
+            nav {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right))
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html" class="logo"><span class="la">A</span>udace<span class="ld">.</span></a>
+        <div class="nr">
+            <a href="come-lavoriamo.html" data-l="it">Metodo</a><a href="come-lavoriamo.html" data-l="en">Method</a>
+            <a href="casi-studio.html">Track Record</a>
+            <a href="javascript:void(0)" onclick="openCal()" class="nc" data-l="it">Prenota Appuntamento</a><a href="javascript:void(0)" onclick="openCal()" class="nc"
+                data-l="en">Book a Call</a>
+            <button class="bg" onclick="tgM()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mm" id="mm">
+        <a href="come-lavoriamo.html" data-l="it" onclick="tgM()">Metodo</a><a href="come-lavoriamo.html" data-l="en"
+            onclick="tgM()">Method</a>
+        <a href="casi-studio.html" onclick="tgM()">Track Record</a>
+        <a href="javascript:void(0)" class="nc" data-l="it" onclick="openCal();tgM()">Prenota Appuntamento</a><a href="javascript:void(0)"
+            class="nc" data-l="en" onclick="openCal();tgM()">Book a Call</a>
+    </div>
+
+    <section class="hero">
+        <div class="hero-gw" id="hg"></div>
+        <div class="w hero-c">
+            <div class="rv">
+                <p class="lb" style="margin-bottom:28px">AI Strategy &amp; Implementation</p>
+                <h1 data-l="it">Implementiamo<br><i>intelligenza artificiale</i><br>nelle aziende <span class="nr-wrap"
+                        id="nrIt"></span></h1>
+                <h1 data-l="en">We implement<br><i>artificial intelligence</i><br>in <span class="nr-wrap"
+                        id="nrEn"></span> businesses.</h1>
+                <p class="hero-sub" data-l="it">Audace affianca PMI e aziende strutturate dall'analisi
+                    all'implementazione. Soluzioni su misura, risultati misurabili.</p>
+                <p class="hero-sub" data-l="en">Audace partners with businesses from analysis to implementation.
+                    Tailored solutions, measurable results.</p>
+                <div class="hero-ctas">
+                    <a href="javascript:void(0)" onclick="openCal()" class="bp" data-l="it">Prenota primo appuntamento<svg width="14" height="14"
+                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a><a href="javascript:void(0)" onclick="openCal()" class="bp" data-l="en">Book your first consultation<svg width="14"
+                            height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a>
+                    <a href="come-lavoriamo.html" class="bs" data-l="it">Il nostro metodo<svg width="14" height="14"
+                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a><a href="come-lavoriamo.html" class="bs" data-l="en">Our method<svg width="14"
+                            height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a>
+                </div>
+                <p class="hero-note" data-l="it">Disponibili in tutta Italia · Remote e in presenza</p>
+                <p class="hero-note" data-l="en">Available worldwide · Remote and on-site</p>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+    <div class="mq">
+        <div class="mq-t" data-l="it"><span>Automazione Processi</span><span>Strategia AI</span><span>Analisi
+                Predittiva</span><span>Automazione Workflow</span><span>Customer Service AI</span><span>Document
+                Intelligence</span><span>Ottimizzazione Operativa</span><span>Change Management</span><span>Automazione
+                Processi</span><span>Strategia AI</span><span>Analisi Predittiva</span><span>Automazione
+                Workflow</span><span>Customer Service AI</span><span>Document Intelligence</span><span>Ottimizzazione
+                Operativa</span><span>Change Management</span></div>
+        <div class="mq-t" data-l="en"><span>Process Automation</span><span>AI Strategy</span><span>Predictive
+                Analytics</span><span>Workflow Automation</span><span>Customer Service AI</span><span>Document
+                Intelligence</span><span>Operational Optimization</span><span>Change Management</span><span>Process
+                Automation</span><span>AI Strategy</span><span>Predictive Analytics</span><span>Workflow
+                Automation</span><span>Customer Service AI</span><span>Document Intelligence</span><span>Operational
+                Optimization</span><span>Change Management</span></div>
+    </div>
+    <span class="sep"></span>
+
+    <section class="ai">
+        <div class="w">
+            <div class="ai-g">
+                <div class="ai-l rv"><span class="lb" data-l="it">Chi è Audace</span><span class="lb" data-l="en">About
+                        Audace</span>
+                    <p data-l="it">Audace è un team di consulenti e ingegneri specializzati in intelligenza artificiale
+                        applicata al business. Non vendiamo tecnologia: <em>progettiamo soluzioni che funzionano</em>,
+                        partendo dai processi reali delle aziende italiane.</p>
+                    <p data-l="en">Audace is a team of consultants and engineers specialized in business-applied AI. We
+                        don't sell technology: <em>we design solutions that work</em>, starting from your real business
+                        processes.</p>
+                </div>
+                <div class="ai-r rv d1">
+                    <p data-l="it">La maggior parte delle aziende sa che l'AI è importante, ma non sa da dove partire.
+                        Noi facciamo il lavoro nel mezzo: quello che trasforma un'idea in un processo che funziona.</p>
+                    <p data-l="en">Most businesses know AI matters but don't know where to start. We do the work in
+                        between: turning an idea into a process that works.</p>
+                    <p data-l="it">Lavoriamo solo su ciò che ha impatto reale. Se un progetto non ha senso, lo diciamo
+                        prima di iniziare.</p>
+                    <p data-l="en">We only work on what creates real impact. If a project doesn't make sense, we'll tell
+                        you before starting.</p>
+                    <div class="qt">
+                        <p data-l="it">"Abbiamo finalmente capito cosa l'AI può fare per noi, e cosa no."</p>
+                        <p data-l="en">"We finally understood what AI can do for us, and what it can't."</p><cite
+                            data-l="it">COO, azienda manifatturiera, 180 dip.</cite><cite data-l="en">COO, manufacturing
+                            company, 180 employees</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="st">
+        <div class="st-gw"></div>
+        <div class="w">
+            <div class="st-g">
+                <div class="si rv">
+                    <div class="sv" data-count="26" data-prefix="+" data-suffix="%">+26%</div>
+                    <div class="sl" data-l="it">Produttività nei team<br>che adottano AI</div>
+                    <div class="sl" data-l="en">Productivity in teams<br>adopting AI</div>
+                    <div class="ss">McKinsey 2024</div>
+                </div>
+                <div class="si rv d1">
+                    <div class="sv">3,7×</div>
+                    <div class="sl" data-l="it">ROI medio su progetti<br>AI ben implementati</div>
+                    <div class="sl" data-l="en">Average ROI on well-<br>implemented AI projects</div>
+                    <div class="ss">BCG &amp; MIT Sloan 2024</div>
+                </div>
+                <div class="si rv d2">
+                    <div class="sv" data-count="70" data-prefix="–" data-suffix="%">–70%</div>
+                    <div class="sl" data-l="it">Tempo di processing<br>documentale con AI</div>
+                    <div class="sl" data-l="en">Document processing<br>time with AI</div>
+                    <div class="ss">McKinsey &amp; Bain 2024</div>
+                </div>
+                <div class="si rv d3">
+                    <div class="sv">6–18m</div>
+                    <div class="sl" data-l="it">Tempo medio al payback<br>su investimenti AI</div>
+                    <div class="sl" data-l="en">Average payback time<br>on AI investments</div>
+                    <div class="ss">Forrester 2024</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="ap">
+        <div class="w">
+            <h2 class="rv" data-l="it">L'AI applicata bene non è<br>tecnologia. È <i>strategia.</i></h2>
+            <h2 class="rv" data-l="en">AI done right isn't<br>technology. It's <i>strategy.</i></h2>
+            <div class="ap-g">
+                <div class="rv d1">
+                    <p data-l="it">La maggior parte dei progetti AI fallisce non per la tecnologia, ma perché manca una
+                        strategia chiara.</p>
+                    <p data-l="en">Most AI projects fail not because of technology, but because of a missing clear
+                        strategy.</p>
+                </div>
+                <div class="rv d2">
+                    <p data-l="it">Mappiamo i processi, identifichiamo le opportunità reali, costruiamo un business case
+                        solido.</p>
+                    <p data-l="en">We map processes, identify real opportunities, and build a solid business case.</p><a
+                        href="come-lavoriamo.html" class="al" data-l="it">Scopri il nostro metodo<svg width="14"
+                            height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a><a href="come-lavoriamo.html" class="al" data-l="en">Discover our method<svg
+                            width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="ch">
+        <div class="w">
+            <div class="ch-h rv"><span class="lb" data-l="it">Le sfide che affrontiamo</span><span class="lb"
+                    data-l="en">Challenges we solve</span></div>
+            <div class="ch-g">
+                <div class="ci rv">
+                    <div class="cn">01</div>
+                    <h3 data-l="it">Processi manuali che consumano risorse</h3>
+                    <h3 data-l="en">Manual processes draining resources</h3>
+                    <p data-l="it">Attività ripetitive che assorbono ore di lavoro qualificato. L'automazione
+                        intelligente libera il team.</p>
+                    <p data-l="en">Repetitive tasks absorbing skilled labor hours. Intelligent automation frees your
+                        team.</p>
+                </div>
+                <div class="ci rv d1">
+                    <div class="cn">02</div>
+                    <h3 data-l="it">Difficoltà nell'identificare dove l'AI crea valore</h3>
+                    <h3 data-l="en">Difficulty identifying where AI creates value</h3>
+                    <p data-l="it">Tante promesse, poca chiarezza. Vi aiutiamo a separare le opportunità concrete dal
+                        rumore.</p>
+                    <p data-l="en">Lots of promises, little clarity. We help separate real opportunities from noise.</p>
+                </div>
+                <div class="ci rv d2">
+                    <div class="cn">03</div>
+                    <h3 data-l="it">Investimenti senza visibilità sul ritorno</h3>
+                    <h3 data-l="en">Investments with no visibility on returns</h3>
+                    <p data-l="it">Ogni progetto parte da un business case con ROI stimato, tempi e metriche.</p>
+                    <p data-l="en">Every project starts with a business case: estimated ROI, timelines, and metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="pr">
+        <div class="pr-gw"></div>
+        <div class="w">
+            <div class="pr-h rv"><span class="lb" data-l="it">I nostri principi</span><span class="lb" data-l="en">Our
+                    principles</span>
+                <h2 data-l="it">Come pensiamo.<br>Come lavoriamo.</h2>
+                <h2 data-l="en">How we think.<br>How we work.</h2>
+            </div>
+            <div class="pr-g">
+                <div class="pi rv">
+                    <div class="pn">01</div>
+                    <h3 data-l="it">Onestà radicale</h3>
+                    <h3 data-l="en">Radical honesty</h3>
+                    <p data-l="it">Diciamo la verità, anche quando è scomoda. Se l'AI non è la risposta giusta, ve lo
+                        diciamo.</p>
+                    <p data-l="en">We tell the truth, even when uncomfortable. If AI isn't the right answer, we'll tell
+                        you.</p>
+                </div>
+                <div class="pi rv d1">
+                    <div class="pn">02</div>
+                    <h3 data-l="it">Impatto prima di tutto</h3>
+                    <h3 data-l="en">Impact first</h3>
+                    <p data-l="it">Ogni decisione è guidata da una domanda: questo crea valore misurabile?</p>
+                    <p data-l="en">Every decision is driven by one question: does this create measurable value?</p>
+                </div>
+                <div class="pi rv d2">
+                    <div class="pn">03</div>
+                    <h3 data-l="it">Autonomia come obiettivo</h3>
+                    <h3 data-l="en">Autonomy as a goal</h3>
+                    <p data-l="it">Non creiamo dipendenza. Formiamo il vostro team perché possiate proseguire da soli.
+                    </p>
+                    <p data-l="en">We don't create dependency. We train your team so you can continue on your own.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="tc">
+        <div class="w">
+            <div class="tc-i">
+                <div class="tc-l rv"><span class="lb" data-l="it">Tecnologia</span><span class="lb"
+                        data-l="en">Technology</span>
+                    <h2 data-l="it">I migliori strumenti.<br>Nessun vendor lock-in.</h2>
+                    <h2 data-l="en">Best-in-class tools.<br>No vendor lock-in.</h2>
+                    <p data-l="it">Lavoriamo con le piattaforme leader e sviluppiamo soluzioni custom quando necessario.
+                    </p>
+                    <p data-l="en">We work with leading platforms and develop custom solutions when needed.</p>
+                </div>
+                <div class="rv d1">
+                    <div class="tg"><span class="ti">OpenAI</span><span class="ti">Anthropic</span><span
+                            class="ti">Google Cloud AI</span><span class="ti">Computer Vision</span><span class="ti">NLP
+                            &amp; LLM</span><span class="ti">Predictive Analytics</span><span class="ti">Make &amp;
+                            Zapier</span><span class="ti">Custom Integrations</span><span class="ti">ERP / CRM
+                            Connectors</span><span class="ti">Python &amp; ML Stack</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="tm">
+        <div class="w">
+            <div class="tm-i">
+                <div class="tm-n rv">
+                    <div class="big" data-count="50" data-suffix="+">50+</div>
+                    <div class="bl" data-l="it">Soluzioni implementate</div>
+                    <div class="bl" data-l="en">Solutions implemented</div>
+                    <div class="big" data-count="10" data-suffix="+">10+</div>
+                    <div class="bl" data-l="it">Settori in cui abbiamo lavorato</div>
+                    <div class="bl" data-l="en">Industries served</div>
+                    <div class="qt">
+                        <p data-l="it">"Ci hanno detto le cose come stanno. Nessun hype, solo un piano chiaro."</p>
+                        <p data-l="en">"They told us how things really are. No hype, just a clear plan."</p><cite
+                            data-l="it">CEO, azienda retail, 12 pdv</cite><cite data-l="en">CEO, retail company, 12
+                            stores</cite>
+                    </div>
+                </div>
+                <div class="tm-t rv d1">
+                    <p data-l="it">Il nostro team unisce <em>competenze di consulenza strategica e ingegneria AI</em>.
+                        Ogni progetto è seguito da figure senior.</p>
+                    <p data-l="en">Our team combines <em>strategic consulting and AI engineering expertise</em>. Every
+                        project is led by senior professionals.</p>
+                    <p data-l="it">Abbiamo esperienza diretta in manifattura, retail, fashion, hospitality, logistica e
+                        servizi finanziari.</p>
+                    <p data-l="en">We have direct experience in manufacturing, retail, fashion, hospitality, logistics,
+                        and financial services.</p>
+                    <a href="casi-studio.html" class="al" data-l="it">Vedi il nostro track record<svg width="14"
+                            height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a><a href="casi-studio.html" class="al" data-l="en">See our track record<svg width="14"
+                            height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="ct" id="contatto">
+        <div class="ct-gw"></div>
+        <div class="w">
+            <div class="ct-i rv">
+                <div class="ct-l">
+                    <span class="lb" data-l="it">Contattaci</span><span class="lb" data-l="en">Contact us</span>
+                    <h2 data-l="it">Prenota il tuo<br>primo appuntamento.</h2>
+                    <h2 data-l="en">Book your<br>first consultation.</h2>
+                    <p data-l="it">30 minuti per capire se e come l'AI può creare valore nella tua azienda.</p>
+                    <p data-l="en">30 minutes to understand if and how AI can create value in your business.</p>
+                    <div class="pk">
+                        <span data-l="it">Analisi personalizzata della tua situazione</span><span
+                            data-l="en">Personalized analysis of your situation</span>
+                        <span data-l="it">Stima del ROI potenziale</span><span data-l="en">Potential ROI estimate</span>
+                        <span data-l="it">Roadmap preliminare</span><span data-l="en">Preliminary roadmap</span>
+                        <span data-l="it">Risposta in 24 ore</span><span data-l="en">Response within 24 hours</span>
+                    </div>
+                    <div style="margin-top:28px">
+                        <a href="/cdn-cgi/l/email-protection#791a16170a0c150d10171e39180c1d181a1c1018571a1614" style="font-size:.9rem;color:var(--nv);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg><span class="__cf_email__" data-cfemail="7c1f13120f09100815121b3c1d09181d1f19151d521f1311">[email&#160;protected]</span></a>
+                    </div>
+                </div>
+                <div class="ct-r">
+                    <form id="cF">
+                        <div class="fr">
+                            <div><label data-l="it">Nome</label><label data-l="en">First Name</label><input type="text"
+                                    id="fn" required></div>
+                            <div><label data-l="it">Cognome</label><label data-l="en">Last Name</label><input
+                                    type="text" required></div>
+                        </div>
+                        <label data-l="it">Email aziendale</label><label data-l="en">Business Email</label><input
+                            type="email" required>
+                        <label data-l="it">Azienda</label><label data-l="en">Company</label><input type="text" required>
+                        <label data-l="it">Dimensione azienda</label><label data-l="en">Company Size</label>
+                        <select required>
+                            <option value="" disabled selected data-l="it">Seleziona</option>
+                            <option value="" disabled selected data-l="en">Select</option>
+                            <option>1–20</option>
+                            <option>20–50</option>
+                            <option>50–200</option>
+                            <option>200–500</option>
+                            <option>500+</option>
+                        </select>
+                        <label data-l="it">Messaggio (opzionale)</label><label data-l="en">Message
+                            (optional)</label><textarea rows="3"></textarea>
+                        <button type="submit" class="bsb" data-l="it">Prenota primo appuntamento<svg width="14"
+                                height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                        <button type="submit" class="bsb" data-l="en">Book first consultation<svg width="14" height="14"
+                                fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </form>
+                    <div class="fok" id="fok">
+                        <h3 data-l="it">Grazie, <span id="un"></span>.</h3>
+                        <h3 data-l="en">Thank you, <span id="un2"></span>.</h3>
+                        <p data-l="it">Ti ricontattiamo entro 24 ore.</p>
+                        <p data-l="en">We'll get back to you within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="w">
+            <div class="fg">
+                <div class="fb"><span class="la">A</span>udace<span class="ld">.</span><small>AI Strategy &amp;
+                        Implementation</small></div>
+                <div class="fl"><a href="come-lavoriamo.html" data-l="it">Metodo</a><a href="come-lavoriamo.html"
+                        data-l="en">Method</a><a href="casi-studio.html">Track Record</a><a href="javascript:void(0)" onclick="openCal()"
+                        data-l="it">Contatti</a><a href="javascript:void(0)" onclick="openCal()" data-l="en">Contact</a></div>
+                <div class="frt"><a href="/cdn-cgi/l/email-protection#086b67667b7d647c61666f48697d6c696b6d6169266b6765"><span class="__cf_email__" data-cfemail="7615191805031a021f1811361703121715131f175815191b">[email&#160;protected]</span></a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        const isIT = navigator.language.startsWith('it'); if (!isIT) document.body.classList.add('en');
+        document.title = isIT ? 'Audace · Strategia AI e Implementazione' : 'Audace · AI Strategy & Implementation';
+        const obs = new IntersectionObserver(e => { e.forEach(el => { if (el.isIntersecting) { el.target.classList.add('on'); obs.unobserve(el.target) } }) }, { threshold: .06 }); document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+        const cO = new IntersectionObserver(en => { en.forEach(e => { if (e.isIntersecting) { aC(e.target); cO.unobserve(e.target) } }) }, { threshold: .5 }); document.querySelectorAll('[data-count]').forEach(el => cO.observe(el));
+        function aC(el) { const t = parseInt(el.dataset.count), p = el.dataset.prefix || '', s = el.dataset.suffix || ''; let c = 0; const d = 1200, st = t / d * 16, tm = setInterval(() => { c += st; if (c >= t) { c = t; clearInterval(tm) } el.textContent = p + Math.round(c) + s }, 16) }
+        const hg = document.getElementById('hg'); document.querySelector('.hero').addEventListener('mousemove', e => { const r = e.currentTarget.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; hg.style.transform = `translate(${x * 40}px,${y * 30}px)` });
+        document.getElementById('cF').addEventListener('submit', function (e) { e.preventDefault(); const n = document.getElementById('fn').value; document.getElementById('un').textContent = n; const u2 = document.getElementById('un2'); if (u2) u2.textContent = n; this.style.display = 'none'; document.getElementById('fok').style.display = 'block' });
+        function tgM() { document.querySelector('.bg').classList.toggle('open'); document.getElementById('mm').classList.toggle('open'); document.body.style.overflow = document.getElementById('mm').classList.contains('open') ? 'hidden' : '' }
+        (function () {
+            const wIt = ['italiane', 'tedesche', 'inglesi', 'americane', 'francesi', 'spagnole', 'olandesi', 'svizzere', 'austriache', 'svedesi', 'portoghesi', 'polacche'];
+            const wEn = ['Italian', 'German', 'British', 'American', 'French', 'Spanish', 'Dutch', 'Swiss', 'Austrian', 'Swedish', 'Portuguese', 'Polish'];
+            function initRotator(id, words) {
+                const wrap = document.getElementById(id); if (!wrap) return;
+                words.forEach((w, i) => { const s = document.createElement('span'); s.className = 'nr-word' + (i === 0 ? ' active' : ''); s.textContent = w; wrap.appendChild(s) });
+                let cur = 0;
+                setInterval(() => {
+                    const spans = wrap.querySelectorAll('.nr-word');
+                    spans[cur].classList.remove('active'); spans[cur].classList.add('exit');
+                    cur = (cur + 1) % words.length;
+                    spans[cur].classList.add('active');
+                        setTimeout(() => { spans[(cur - 1 + words.length) % words.length].classList.remove('exit') }, 600);
+                }, 2200);
+            }
+            initRotator('nrIt', wIt);
+            initRotator('nrEn', wEn);
+        })();
+
+        /* ═══ Cal.com Booking Modal ═══ */
+        function openCal() {
+            var f = document.getElementById('calFrame');
+            if (!f.src.includes('cal.eu')) f.src = 'https://cal.eu/audaceia/incontro-conoscitivo?embed=true&theme=dark';
+            document.getElementById('calOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCal() {
+            document.getElementById('calOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeCal() });
+    </script>
+
+    <!-- Cal.com Booking Modal -->
+    <div id="calOverlay" style="position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s cubic-bezier(.22,1,.36,1),visibility .4s">
+        <div onclick="closeCal()" style="position:absolute;inset:0;background:rgba(5,8,12,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)"></div>
+        <div style="position:relative;width:min(680px,calc(100vw - 32px));height:min(740px,calc(100vh - 48px));background:#0e1219;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transform:scale(.97) translateY(8px);transition:transform .4s cubic-bezier(.22,1,.36,1);box-shadow:0 24px 80px rgba(0,0,0,.5)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0">
+                <span style="font-family:'EB Garamond',Georgia,serif;font-size:1.15rem;color:#f0ede8" data-l="it">Prenota un incontro</span>
+                <span style="font-family:'EB Garamond',Georgia,serif;font-size:1.15rem;color:#f0ede8" data-l="en">Book a meeting</span>
+                <button onclick="closeCal()" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:0;border:1px solid rgba(255,255,255,.06);border-radius:6px;color:#7a756d;cursor:pointer;padding:0;transition:all .2s" aria-label="Close">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div style="flex:1;overflow:auto;scrollbar-width:thin;scrollbar-color:#3b7dd8 #0e1219">
+                <iframe id="calFrame" src="about:blank" style="width:100%;height:100%;border:none" loading="lazy" allow="payment"></iframe>
+            </div>
+        </div>
+    </div>
+    <style>
+        #calOverlay.open{opacity:1!important;visibility:visible!important}
+        #calOverlay.open>div:last-child{transform:scale(1) translateY(0)!important}
+        /* Cal.com modal scrollbar themed */
+        #calOverlay *::-webkit-scrollbar{width:6px;height:6px}
+        #calOverlay *::-webkit-scrollbar-track{background:#0e1219;border-radius:3px}
+        #calOverlay *::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#3b7dd8,#c9a45c);border-radius:3px}
+        #calOverlay *::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#5a9af0,#d4b06a)}
+        

@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5,viewport-fit=cover">
+    <title>Track Record · Audace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        /* Custom Scrollbar - Themed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg, #0a0f14)
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3b7dd8, #c9a45c);
+            border-radius: 4px
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #5a9af0, #d4b06a)
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #3b7dd8 #0a0f14
+        }
+
+        :root {
+            --bg: #0a0f14;
+            --bg2: #0e1219;
+            --sf: #141a22;
+            --sf2: #1a222d;
+            --tx: #f0ede8;
+            --tx2: #c4bfb6;
+            --mt: #7a756d;
+            --nv: #3b7dd8;
+            --nv2: #5a9af0;
+            --gd: #c9a45c;
+            --ln: rgba(255, 255, 255, .06);
+            --gl: rgba(59, 125, 216, .12);
+            --r: 8px
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: var(--tx);
+            background: var(--bg);
+            line-height: 1.8;
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw
+        }
+
+        ::selection {
+            background: var(--nv);
+            color: #fff
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            background: rgba(10, 15, 20, .92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--ln)
+        }
+
+        .logo {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.7rem;
+            color: var(--tx);
+            text-decoration: none;
+            letter-spacing: -.02em;
+            transition: opacity .2s
+        }
+
+        .logo:hover {
+            opacity: .7
+        }
+
+        .logo .la {
+            color: var(--nv);
+            font-style: italic
+        }
+
+        .logo .ld {
+            color: var(--gd);
+            font-size: 2rem;
+            line-height: 0
+        }
+
+        .nr {
+            display: flex;
+            align-items: center;
+            gap: 36px
+        }
+
+        .nr a {
+            font-size: .82rem;
+            font-weight: 400;
+            letter-spacing: .03em;
+            color: var(--mt);
+            text-decoration: none;
+            transition: color .2s;
+            position: relative
+        }
+
+        .nr a:not(.nc):not(.bg)::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--tx);
+            transition: width .3s
+        }
+
+        .nr a:not(.nc):not(.bg):hover::after {
+            width: 100%
+        }
+
+        .nr a:hover,
+        .nr a.act {
+            color: var(--tx)
+        }
+
+        .nc {
+            background: var(--nv);
+            color: #fff !important;
+            padding: 10px 26px;
+            font-weight: 500;
+            border-radius: var(--r);
+            transition: all .25s
+        }
+
+        .nc:hover {
+            background: var(--nv2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(59, 125, 216, .25)
+        }
+
+        .bg {
+            display: none !important;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            flex-direction: column;
+            gap: 5px
+        }
+
+        .bg span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--tx);
+            transition: all .3s
+        }
+
+        .bg.open span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 5px)
+        }
+
+        .bg.open span:nth-child(2) {
+            opacity: 0
+        }
+
+        .bg.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -5px)
+        }
+
+        .mm {
+            display: none;
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 15, 20, .97);
+            backdrop-filter: blur(20px);
+            z-index: 99;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px
+        }
+
+        .mm.open {
+            display: flex
+        }
+
+        .mm a {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--tx);
+            text-decoration: none
+        }
+
+        .mm a:hover {
+            color: var(--nv)
+        }
+
+        .mm .nc {
+            font-family: 'Inter', sans-serif;
+            font-size: .92rem;
+            margin-top: 16px
+        }
+
+        .w {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px
+        }
+
+        .lb {
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gd)
+        }
+
+        .sep {
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: var(--ln)
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .rv.on {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .d1 {
+            transition-delay: .1s
+        }
+
+        .bp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--nv);
+            color: #fff;
+            padding: .75em 1.8em;
+            font-family: 'Inter', sans-serif;
+            font-size: .88rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: var(--r);
+            transition: all .3s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .bp::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .1), transparent);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .bp:hover::before {
+            opacity: 1
+        }
+
+        .bp:hover {
+            background: var(--nv2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59, 125, 216, .25)
+        }
+
+        .bp svg {
+            transition: transform .3s
+        }
+
+        .bp:hover svg {
+            transform: translateX(4px)
+        }
+
+        .ph {
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .ph-gw {
+            position: absolute;
+            top: -30%;
+            left: -10%;
+            width: 60%;
+            height: 120%;
+            background: radial-gradient(ellipse, var(--gl), transparent 70%);
+            pointer-events: none;
+            opacity: .5
+        }
+
+        .ph-g {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 60px;
+            align-items: end;
+            position: relative;
+            z-index: 1
+        }
+
+        .ph h1 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            line-height: 1.1
+        }
+
+        .ph h1 i {
+            font-style: italic;
+            color: var(--nv)
+        }
+
+        .ph .sub {
+            font-size: 1rem;
+            color: var(--tx2);
+            line-height: 1.75;
+            margin-bottom: 28px
+        }
+
+        .hs {
+            display: flex;
+            gap: 40px
+        }
+
+        .hi .hv {
+            font-family: 'EB Garamond', serif;
+            font-size: 2rem;
+            color: var(--tx);
+            line-height: 1
+        }
+
+        .hi .hl {
+            font-size: .62rem;
+            color: var(--mt);
+            margin-top: 4px
+        }
+
+        .tabs {
+            background: var(--bg2);
+            position: sticky;
+            top: 64px;
+            z-index: 90;
+            overflow: hidden
+        }
+
+        .tabs-i {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none
+        }
+
+        .tabs-i::-webkit-scrollbar {
+            display: none
+        }
+
+        .tabs-i a {
+            flex-shrink: 0;
+            padding: 18px 28px;
+            font-size: .72rem;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--mt);
+            border-bottom: 2px solid transparent;
+            transition: all .25s;
+            white-space: nowrap
+        }
+
+        .tabs-i a:hover {
+            color: var(--tx)
+        }
+
+        .tabs-i a.act {
+            color: var(--nv);
+            border-bottom-color: var(--nv)
+        }
+
+        .sec {
+            padding: 100px 0
+        }
+
+        .sg {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 56px
+        }
+
+        .ss {
+            position: sticky;
+            top: 160px;
+            align-self: start
+        }
+
+        .stag {
+            font-size: .62rem;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--gd);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .stag::before {
+            content: '';
+            width: 16px;
+            height: 1px;
+            background: var(--gd)
+        }
+
+        .ss h2 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: 1.7rem;
+            line-height: 1.25;
+            margin-bottom: 16px
+        }
+
+        .ss>p {
+            font-size: .86rem;
+            color: var(--mt);
+            margin-bottom: 24px;
+            line-height: 1.7
+        }
+
+        .sm {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.8rem;
+            color: var(--nv);
+            line-height: 1;
+            margin-bottom: 4px
+        }
+
+        .sml {
+            font-size: .72rem;
+            color: var(--mt)
+        }
+
+        .scs {
+            display: flex;
+            flex-direction: column;
+            gap: 36px
+        }
+
+        .cc {
+            border: 1px solid var(--ln);
+            border-radius: var(--r);
+            overflow: hidden;
+            transition: all .4s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .cc:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+            border-color: rgba(59, 125, 216, .15)
+        }
+
+        .cc-t {
+            padding: 32px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--ln)
+        }
+
+        .cc-m {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--nv);
+            line-height: 1
+        }
+
+        .cc-ml {
+            font-size: .78rem;
+            color: var(--mt)
+        }
+
+        .cc-p {
+            font-size: .58rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--nv);
+            border: 1px solid rgba(59, 125, 216, .2);
+            padding: 5px 14px;
+            margin-left: auto;
+            border-radius: var(--r)
+        }
+
+        .cc-b {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1px;
+            background: var(--ln)
+        }
+
+        .cc-c {
+            padding: 28px;
+            background: var(--sf);
+            transition: background .3s
+        }
+
+        .cc-c:hover {
+            background: var(--sf2)
+        }
+
+        .cc-c h5 {
+            font-size: .6rem;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--gd);
+            margin-bottom: 10px
+        }
+
+        .cc-c p {
+            font-size: .82rem;
+            color: var(--mt);
+            line-height: 1.65
+        }
+
+        .cc-rs {
+            padding: 28px;
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--ln)
+        }
+
+        .cc-r .v {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--nv);
+            line-height: 1;
+            margin-bottom: 2px
+        }
+
+        .cc-r .l {
+            font-size: .62rem;
+            color: var(--mt)
+        }
+
+        .cc-q {
+            padding: 28px;
+            border-top: 1px solid var(--ln);
+            border-left: 2px solid var(--gd);
+            margin: 0;
+            transition: border-color .3s
+        }
+
+        .cc-q:hover {
+            border-left-color: var(--nv)
+        }
+
+        .cc-q p {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: .98rem;
+            color: var(--tx2);
+            line-height: 1.6;
+            margin-bottom: 6px
+        }
+
+        .cc-q cite {
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: .62rem;
+            color: var(--mt)
+        }
+
+        .cta {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            background: var(--bg2);
+            overflow: hidden
+        }
+
+        .cta-gw {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, var(--gl), transparent 70%);
+            pointer-events: none;
+            opacity: .4
+        }
+
+        .cta h2 {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+            font-size: 2.4rem;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1
+        }
+
+        .cta p {
+            font-size: .96rem;
+            color: var(--mt);
+            margin-bottom: 32px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1
+        }
+
+        footer {
+            padding: 48px 0;
+            background: var(--bg)
+        }
+
+        .fg {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center
+        }
+
+        .fb {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.25rem;
+            color: var(--tx)
+        }
+
+        .fb .la {
+            color: var(--nv);
+            font-style: italic
+        }
+
+        .fb .ld {
+            color: var(--gd)
+        }
+
+        .fb small {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: .7rem;
+            color: var(--mt);
+            margin-top: 4px
+        }
+
+        .fl {
+            display: flex;
+            gap: 28px;
+            justify-content: center
+        }
+
+        .fl a {
+            font-size: .72rem;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--mt);
+            transition: color .2s;
+            position: relative
+        }
+
+        .fl a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--tx);
+            transition: width .3s
+        }
+
+        .fl a:hover::after {
+            width: 100%
+        }
+
+        .fl a:hover {
+            color: var(--tx)
+        }
+
+        .frt {
+            text-align: right
+        }
+
+        .frt a {
+            display: block;
+            font-size: .86rem;
+            color: var(--nv);
+            text-decoration: none;
+            margin-bottom: 4px
+        }
+
+        .frt a:hover {
+            color: var(--nv2)
+        }
+
+        .frt span {
+            font-size: .68rem;
+            color: var(--mt)
+        }
+
+        [data-l=en] {
+            display: none !important
+        }
+
+        body.en [data-l=it] {
+            display: none !important
+        }
+
+        body.en [data-l=en] {
+            display: revert !important
+        }
+
+        @media(max-width:1024px) {
+            .ph-g {
+                grid-template-columns: 1fr;
+                gap: 32px
+            }
+
+            .sg {
+                grid-template-columns: 1fr
+            }
+
+            .ss {
+                position: static
+            }
+
+            .cc-b {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:768px) {
+            nav {
+                padding: 0 20px
+            }
+
+            .nr>a:not(.bg) {
+                display: none
+            }
+
+            .bg {
+                display: flex !important
+            }
+
+            .w {
+                padding: 0 20px
+            }
+
+            .ph {
+                padding: 120px 0 60px
+            }
+
+            .ph h1 {
+                font-size: 2.2rem
+            }
+
+            .hs {
+                gap: 24px
+            }
+
+            .sec {
+                padding: 60px 0
+            }
+
+            .fg {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 20px
+            }
+
+            .fl {
+                justify-content: center
+            }
+
+            .frt {
+                text-align: center
+            }
+
+            .cc-t {
+                padding: 20px
+            }
+
+            .cc-c {
+                padding: 20px
+            }
+
+            .cc-rs {
+                padding: 20px;
+                gap: 20px
+            }
+
+            .cc-p {
+                margin-left: 0
+            }
+        }
+
+        @media(max-width:390px) {
+            body {
+                font-size: 16px
+            }
+            .w {
+                padding: 0 16px
+            }
+            nav {
+                padding: 0 16px
+            }
+            .ph h1 {
+                font-size: 1.9rem
+            }
+        }
+
+        @supports(padding: env(safe-area-inset-bottom)) {
+            body {
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right)
+            }
+            footer {
+                padding-bottom: calc(48px + env(safe-area-inset-bottom))
+            }
+            nav {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right))
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html" class="logo"><span class="la">A</span>udace<span class="ld">.</span></a>
+        <div class="nr">
+            <a href="come-lavoriamo.html" data-l="it">Metodo</a><a href="come-lavoriamo.html" data-l="en">Method</a>
+            <a href="casi-studio.html" class="act">Track Record</a>
+            <a href="javascript:void(0)" onclick="openCal()" class="nc" data-l="it">Prenota Appuntamento</a><a href="javascript:void(0)" onclick="openCal()"
+                class="nc" data-l="en">Book a Call</a>
+            <button class="bg" onclick="tgM()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mm" id="mm">
+        <a href="come-lavoriamo.html" data-l="it" onclick="tgM()">Metodo</a><a href="come-lavoriamo.html" data-l="en"
+            onclick="tgM()">Method</a>
+        <a href="casi-studio.html" onclick="tgM()">Track Record</a>
+        <a href="javascript:void(0)" class="nc" data-l="it" onclick="openCal();tgM()">Prenota Appuntamento</a><a
+            href="javascript:void(0)" class="nc" data-l="en" onclick="openCal();tgM()">Book a Call</a>
+    </div>
+
+    <section class="ph">
+        <div class="ph-gw"></div>
+        <div class="w">
+            <div class="ph-g">
+                <div class="rv"><span class="lb" style="margin-bottom:24px;display:block">Track Record</span>
+                    <h1 data-l="it">Risultati reali,<br><i>per ogni settore.</i></h1>
+                    <h1 data-l="en">Real results,<br><i>across industries.</i></h1>
+                </div>
+                <div class="rv d1">
+                    <p class="sub" data-l="it">Ogni caso è anonimizzato ma basato su progetti reali. Dati verificabili,
+                        metriche misurate, impatto concreto.</p>
+                    <p class="sub" data-l="en">Every case is anonymized but based on real projects. Verifiable data,
+                        measured metrics, concrete impact.</p>
+                    <div class="hs">
+                        <div class="hi">
+                            <div class="hv">50+</div>
+                            <div class="hl" data-l="it">Soluzioni</div>
+                            <div class="hl" data-l="en">Solutions</div>
+                        </div>
+                        <div class="hi">
+                            <div class="hv">10+</div>
+                            <div class="hl" data-l="it">Settori</div>
+                            <div class="hl" data-l="en">Industries</div>
+                        </div>
+                        <div class="hi">
+                            <div class="hv">6–18 m</div>
+                            <div class="hl" data-l="it">Tempo al ROI</div>
+                            <div class="hl" data-l="en">Time to ROI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+    <div class="tabs">
+        <div class="w">
+            <div class="tabs-i">
+                <a href="#tessile" class="act" data-l="it">Tessile</a><a href="#textile" class="act"
+                    data-l="en">Textile</a>
+                <a href="#fashion">Fashion</a>
+                <a href="#alberghiero" data-l="it">Alberghiero</a><a href="#hospitality" data-l="en">Hospitality</a>
+                <a href="#logistica" data-l="it">Logistica</a><a href="#logistics" data-l="en">Logistics</a>
+                <a href="#retail">Retail</a>
+                <a href="#manifattura" data-l="it">Manifattura</a><a href="#manufacturing" data-l="en">Manufacturing</a>
+            </div>
+        </div>
+    </div>
+    <span class="sep"></span>
+
+    <section class="sec" id="tessile">
+        <div class="w">
+            <div class="sg">
+                <div class="ss rv">
+                    <div class="stag" data-l="it">Tessile</div>
+                    <div class="stag" data-l="en">Textile</div>
+                    <h2 data-l="it">Controllo qualità e demand forecasting con AI.</h2>
+                    <h2 data-l="en">Quality control and demand forecasting with AI.</h2>
+                    <p data-l="it">Visione artificiale e analisi predittiva per l'industria tessile.</p>
+                    <p data-l="en">Computer vision and predictive analytics for the textile industry.</p>
+                    <div class="sm">–40%</div>
+                    <div class="sml" data-l="it">Tempo controllo qualità</div>
+                    <div class="sml" data-l="en">Quality control time</div>
+                </div>
+                <div class="scs">
+                    <div class="cc rv">
+                        <div class="cc-t">
+                            <div>
+                                <div class="cc-m">–40%</div>
+                                <div class="cc-ml" data-l="it">Tempo controllo qualità</div>
+                                <div class="cc-ml" data-l="en">Quality control time</div>
+                            </div>
+                            <div class="cc-p" data-l="it">Visione Artificiale</div>
+                            <div class="cc-p" data-l="en">Computer Vision</div>
+                        </div>
+                        <div class="cc-b">
+                            <div class="cc-c">
+                                <h5 data-l="it">La sfida</h5>
+                                <h5 data-l="en">The challenge</h5>
+                                <p data-l="it">3 operatori per turno dedicati al controllo manuale. Tasso errore: 4,2%.
+                                </p>
+                                <p data-l="en">3 operators per shift for manual inspection. Error rate: 4.2%.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">La soluzione</h5>
+                                <h5 data-l="en">The solution</h5>
+                                <p data-l="it">Visione artificiale su 2 linee di produzione. Rileva difetti in tempo
+                                    reale.</p>
+                                <p data-l="en">Computer vision on 2 production lines. Real-time defect detection.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">Il risultato</h5>
+                                <h5 data-l="en">The result</h5>
+                                <p data-l="it">Da 3 a 1 operatore. Errori da 4,2% a 0,6%. Payback in 4 mesi.</p>
+                                <p data-l="en">From 3 to 1 operator. Errors from 4.2% to 0.6%. Payback in 4 months.</p>
+                            </div>
+                        </div>
+                        <div class="cc-rs">
+                            <div class="cc-r">
+                                <div class="v">–40%</div>
+                                <div class="l">QC Time</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">–67%</div>
+                                <div class="l" data-l="it">Errori</div>
+                                <div class="l" data-l="en">Errors</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">4 mo</div>
+                                <div class="l">Payback</div>
+                            </div>
+                        </div>
+                        <blockquote class="cc-q">
+                            <p data-l="it">"Il sistema segnala solo le eccezioni, e non ne sbaglia una."</p>
+                            <p data-l="en">"The system only flags exceptions, and it never gets one wrong."</p><cite
+                                data-l="it">Responsabile produzione, Veneto, 90 dip.</cite><cite data-l="en">Production
+                                manager, 90 employees</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="sec" id="fashion">
+        <div class="w">
+            <div class="sg">
+                <div class="ss rv">
+                    <div class="stag">Fashion</div>
+                    <h2 data-l="it">Personalizzazione e‑commerce e sviluppo collezioni.</h2>
+                    <h2 data-l="en">E-commerce personalization and collection development.</h2>
+                    <p data-l="it">Recommendation engine e AI generativa per brand fashion.</p>
+                    <p data-l="en">Recommendation engine and generative AI for fashion brands.</p>
+                    <div class="sm">+28%</div>
+                    <div class="sml" data-l="it">Conversioni e-commerce</div>
+                    <div class="sml" data-l="en">E-commerce conversions</div>
+                </div>
+                <div class="scs">
+                    <div class="cc rv">
+                        <div class="cc-t">
+                            <div>
+                                <div class="cc-m">+28%</div>
+                                <div class="cc-ml" data-l="it">Conversioni e-commerce</div>
+                                <div class="cc-ml" data-l="en">E-commerce conversions</div>
+                            </div>
+                            <div class="cc-p">Recommendation Engine</div>
+                        </div>
+                        <div class="cc-b">
+                            <div class="cc-c">
+                                <h5 data-l="it">La sfida</h5>
+                                <h5 data-l="en">The challenge</h5>
+                                <p data-l="it">Stessi prodotti per tutti. Conversione ferma all'1,8%.</p>
+                                <p data-l="en">Same products shown to everyone. Conversion stuck at 1.8%.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">La soluzione</h5>
+                                <h5 data-l="en">The solution</h5>
+                                <p data-l="it">Recommendation engine AI su homepage, categorie e cross-sell.</p>
+                                <p data-l="en">AI recommendation engine on homepage, categories, and cross-sell.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">Il risultato</h5>
+                                <h5 data-l="en">The result</h5>
+                                <p data-l="it">Conversione +28%. Carrello medio +18% in 3 mesi.</p>
+                                <p data-l="en">Conversion +28%. Average cart +18% in 3 months.</p>
+                            </div>
+                        </div>
+                        <div class="cc-rs">
+                            <div class="cc-r">
+                                <div class="v">+28%</div>
+                                <div class="l" data-l="it">Conversioni</div>
+                                <div class="l" data-l="en">Conversions</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">+18%</div>
+                                <div class="l" data-l="it">Carrello</div>
+                                <div class="l" data-l="en">Avg Cart</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">3 mo</div>
+                                <div class="l" data-l="it">Al risultato</div>
+                                <div class="l" data-l="en">To result</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="sec" id="alberghiero">
+        <div class="w">
+            <div class="sg">
+                <div class="ss rv">
+                    <div class="stag" data-l="it">Alberghiero</div>
+                    <div class="stag" data-l="en">Hospitality</div>
+                    <h2 data-l="it">Guest experience e revenue management con AI.</h2>
+                    <h2 data-l="en">Guest experience and revenue management with AI.</h2>
+                    <div class="sm">–65%</div>
+                    <div class="sml" data-l="it">Richieste manuali front desk</div>
+                    <div class="sml" data-l="en">Manual front desk requests</div>
+                </div>
+                <div class="scs">
+                    <div class="cc rv">
+                        <div class="cc-t">
+                            <div>
+                                <div class="cc-m">–65%</div>
+                                <div class="cc-ml" data-l="it">Richieste manuali</div>
+                                <div class="cc-ml" data-l="en">Manual requests</div>
+                            </div>
+                            <div class="cc-p">AI Concierge</div>
+                        </div>
+                        <div class="cc-b">
+                            <div class="cc-c">
+                                <h5 data-l="it">La sfida</h5>
+                                <h5 data-l="en">The challenge</h5>
+                                <p data-l="it">Centinaia di messaggi al giorno. Personale sommerso.</p>
+                                <p data-l="en">Hundreds of messages daily. Staff overwhelmed.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">La soluzione</h5>
+                                <h5 data-l="en">The solution</h5>
+                                <p data-l="it">Assistente AI multilingue integrato WhatsApp e prenotazioni.</p>
+                                <p data-l="en">Multilingual AI assistant integrated with WhatsApp and bookings.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">Il risultato</h5>
+                                <h5 data-l="en">The result</h5>
+                                <p data-l="it">65% richieste gestite dall'AI. Soddisfazione da 4,1 a 4,7/5.</p>
+                                <p data-l="en">65% requests handled by AI. Satisfaction from 4.1 to 4.7/5.</p>
+                            </div>
+                        </div>
+                        <div class="cc-rs">
+                            <div class="cc-r">
+                                <div class="v">–65%</div>
+                                <div class="l" data-l="it">Manuale</div>
+                                <div class="l" data-l="en">Manual</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">24/7</div>
+                                <div class="l" data-l="it">Disponibilità</div>
+                                <div class="l" data-l="en">Availability</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">4,7/5</div>
+                                <div class="l" data-l="it">Soddisfazione</div>
+                                <div class="l" data-l="en">Satisfaction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="sec" id="logistica">
+        <div class="w">
+            <div class="sg">
+                <div class="ss rv">
+                    <div class="stag" data-l="it">Logistica</div>
+                    <div class="stag" data-l="en">Logistics</div>
+                    <h2 data-l="it">Ottimizzazione percorsi e magazzino con AI.</h2>
+                    <h2 data-l="en">Route optimization and warehouse management with AI.</h2>
+                    <div class="sm">–22%</div>
+                    <div class="sml" data-l="it">Costi trasporto</div>
+                    <div class="sml" data-l="en">Transport costs</div>
+                </div>
+                <div class="scs">
+                    <div class="cc rv">
+                        <div class="cc-t">
+                            <div>
+                                <div class="cc-m">–22%</div>
+                                <div class="cc-ml" data-l="it">Costi operativi</div>
+                                <div class="cc-ml" data-l="en">Operational costs</div>
+                            </div>
+                            <div class="cc-p">Route Optimization</div>
+                        </div>
+                        <div class="cc-b">
+                            <div class="cc-c">
+                                <h5 data-l="it">La sfida</h5>
+                                <h5 data-l="en">The challenge</h5>
+                                <p data-l="it">Percorsi mai aggiornati. Consegne puntuali solo al 78%.</p>
+                                <p data-l="en">Routes never updated. On-time deliveries only 78%.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">La soluzione</h5>
+                                <h5 data-l="en">The solution</h5>
+                                <p data-l="it">Ottimizzazione real-time basata su traffico, carichi e priorità.</p>
+                                <p data-l="en">Real-time optimization based on traffic, loads, and priorities.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">Il risultato</h5>
+                                <h5 data-l="en">The result</h5>
+                                <p data-l="it">Costi –22%. Puntuali al 94%. Km giornalieri –18%.</p>
+                                <p data-l="en">Costs –22%. On-time 94%. Daily km –18%.</p>
+                            </div>
+                        </div>
+                        <div class="cc-rs">
+                            <div class="cc-r">
+                                <div class="v">–22%</div>
+                                <div class="l" data-l="it">Costi</div>
+                                <div class="l" data-l="en">Costs</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">94%</div>
+                                <div class="l" data-l="it">Puntuali</div>
+                                <div class="l" data-l="en">On-time</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">–18%</div>
+                                <div class="l">Km/day</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="sec" id="retail">
+        <div class="w">
+            <div class="sg">
+                <div class="ss rv">
+                    <div class="stag">Retail</div>
+                    <h2 data-l="it">Inventory management e demand forecasting.</h2>
+                    <h2 data-l="en">Inventory management and demand forecasting.</h2>
+                    <div class="sm">–35%</div>
+                    <div class="sml" data-l="it">Eccedenze magazzino</div>
+                    <div class="sml" data-l="en">Warehouse surplus</div>
+                </div>
+                <div class="scs">
+                    <div class="cc rv">
+                        <div class="cc-t">
+                            <div>
+                                <div class="cc-m">–35%</div>
+                                <div class="cc-ml" data-l="it">Eccedenze</div>
+                                <div class="cc-ml" data-l="en">Surplus</div>
+                            </div>
+                            <div class="cc-p">Inventory Forecasting</div>
+                        </div>
+                        <div class="cc-b">
+                            <div class="cc-c">
+                                <h5 data-l="it">La sfida</h5>
+                                <h5 data-l="en">The challenge</h5>
+                                <p data-l="it">Ordini su media storica. Stockout su articoli chiave.</p>
+                                <p data-l="en">Orders based on historical average. Stockouts on key items.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">La soluzione</h5>
+                                <h5 data-l="en">The solution</h5>
+                                <p data-l="it">Modello predittivo per punto vendita su stagionalità e trend.</p>
+                                <p data-l="en">Predictive model per store based on seasonality and trends.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">Il risultato</h5>
+                                <h5 data-l="en">The result</h5>
+                                <p data-l="it">Eccedenze –35%. Stockout core –48% in 6 mesi.</p>
+                                <p data-l="en">Surplus –35%. Core stockouts –48% in 6 months.</p>
+                            </div>
+                        </div>
+                        <div class="cc-rs">
+                            <div class="cc-r">
+                                <div class="v">–35%</div>
+                                <div class="l" data-l="it">Eccedenze</div>
+                                <div class="l" data-l="en">Surplus</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">–48%</div>
+                                <div class="l">Stockout</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">6 mo</div>
+                                <div class="l" data-l="it">Al risultato</div>
+                                <div class="l" data-l="en">To result</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="sec" id="manifattura">
+        <div class="w">
+            <div class="sg">
+                <div class="ss rv">
+                    <div class="stag" data-l="it">Manifattura</div>
+                    <div class="stag" data-l="en">Manufacturing</div>
+                    <h2 data-l="it">Reportistica automatica e manutenzione predittiva.</h2>
+                    <h2 data-l="en">Automated reporting and predictive maintenance.</h2>
+                    <div class="sm">340%</div>
+                    <div class="sml">ROI</div>
+                </div>
+                <div class="scs">
+                    <div class="cc rv">
+                        <div class="cc-t">
+                            <div>
+                                <div class="cc-m">340%</div>
+                                <div class="cc-ml" data-l="it">ROI primo anno</div>
+                                <div class="cc-ml" data-l="en">First year ROI</div>
+                            </div>
+                            <div class="cc-p" data-l="it">Reportistica AI</div>
+                            <div class="cc-p" data-l="en">AI Reporting</div>
+                        </div>
+                        <div class="cc-b">
+                            <div class="cc-c">
+                                <h5 data-l="it">La sfida</h5>
+                                <h5 data-l="en">The challenge</h5>
+                                <p data-l="it">3 persone full-time su report settimanali. 6-8 ore per report.</p>
+                                <p data-l="en">3 people full-time on weekly reports. 6-8 hours per report.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">La soluzione</h5>
+                                <h5 data-l="en">The solution</h5>
+                                <p data-l="it">Layer AI connesso a ERP, CRM e logistica. Report automatici ogni lunedì.
+                                </p>
+                                <p data-l="en">AI layer connected to ERP, CRM, and logistics. Automatic reports every
+                                    Monday.</p>
+                            </div>
+                            <div class="cc-c">
+                                <h5 data-l="it">Il risultato</h5>
+                                <h5 data-l="en">The result</h5>
+                                <p data-l="it">3 risorse riassegnate. Payback in 4 mesi. ROI 340%.</p>
+                                <p data-l="en">3 resources reassigned. Payback in 4 months. ROI 340%.</p>
+                            </div>
+                        </div>
+                        <div class="cc-rs">
+                            <div class="cc-r">
+                                <div class="v">340%</div>
+                                <div class="l">ROI</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">3</div>
+                                <div class="l" data-l="it">Riassegnati</div>
+                                <div class="l" data-l="en">Reassigned</div>
+                            </div>
+                            <div class="cc-r">
+                                <div class="v">4 mo</div>
+                                <div class="l">Payback</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <section class="cta">
+        <div class="cta-gw"></div>
+        <div class="w rv">
+            <h2 data-l="it">Operate in un settore diverso? Parliamone.</h2>
+            <h2 data-l="en">Different industry? Let's talk.</h2>
+            <p data-l="it">Ogni azienda ha le sue sfide specifiche. Il primo appuntamento è senza impegno.</p>
+            <p data-l="en">Every business has its own unique challenges. The first consultation is no-commitment.</p>
+            <a href="javascript:void(0)" onclick="openCal()" class="bp" style="position:relative;z-index:1" data-l="it">Prenota primo
+                appuntamento<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></a>
+            <a href="javascript:void(0)" onclick="openCal()" class="bp" style="position:relative;z-index:1" data-l="en">Book first
+                consultation<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></a>
+        </div>
+    </section>
+    <span class="sep"></span>
+
+    <footer>
+        <div class="w">
+            <div class="fg">
+                <div class="fb"><span class="la">A</span>udace<span class="ld">.</span><small>AI Strategy &amp;
+                        Implementation</small></div>
+                <div class="fl"><a href="come-lavoriamo.html" data-l="it">Metodo</a><a href="come-lavoriamo.html"
+                        data-l="en">Method</a><a href="casi-studio.html">Track Record</a><a href="javascript:void(0)" onclick="openCal()"
+                        data-l="it">Contatti</a><a href="javascript:void(0)" onclick="openCal()" data-l="en">Contact</a></div>
+                <div class="frt"><a href="/cdn-cgi/l/email-protection#d2b1bdbca1a7bea6bbbcb592b3a7b6b3b1b7bbb3fcb1bdbf"><span class="__cf_email__" data-cfemail="4b282425383e273f22252c0b2a3e2f2a282e222a65282426">[email&#160;protected]</span></a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        const isIT = navigator.language.startsWith('it'); if (!isIT) document.body.classList.add('en');
+        document.title = isIT ? 'Casi Studio · Audace' : 'Track Record · Audace';
+        const obs = new IntersectionObserver(e => { e.forEach(el => { if (el.isIntersecting) { el.target.classList.add('on'); obs.unobserve(el.target) } }) }, { threshold: .06 }); document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+        const tabs = document.querySelectorAll('.tabs-i a'); const secs = document.querySelectorAll('.sec');
+        function updTab() { let cur = 'tessile'; secs.forEach(s => { const r = s.getBoundingClientRect(); if (r.top < 200) cur = s.id }); tabs.forEach(t => { t.classList.toggle('act', t.getAttribute('href') === '#' + cur) }) }
+        window.addEventListener('scroll', updTab);
+        function tgM() { document.querySelector('.bg').classList.toggle('open'); document.getElementById('mm').classList.toggle('open'); document.body.style.overflow = document.getElementById('mm').classList.contains('open') ? 'hidden' : '' }
+
+        /* ═══ Cal.com Booking Modal ═══ */
+        function openCal() {
+            var f = document.getElementById('calFrame');
+            if (!f.src.includes('cal.eu')) f.src = 'https://cal.eu/audaceia/incontro-conoscitivo?embed=true&theme=dark';
+            document.getElementById('calOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCal() {
+            document.getElementById('calOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeCal() });
+    </script>
+
+    <!-- Cal.com Booking Modal -->
+    <div id="calOverlay" style="position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s cubic-bezier(.22,1,.36,1),visibility .4s">
+        <div onclick="closeCal()" style="position:absolute;inset:0;background:rgba(5,8,12,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)"></div>
+        <div style="position:relative;width:min(680px,calc(100vw - 32px));height:min(740px,calc(100vh - 48px));background:#0e1219;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transform:scale(.97) translateY(8px);transition:transform .4s cubic-bezier(.22,1,.36,1);box-shadow:0 24px 80px rgba(0,0,0,.5)">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0">
+                <span style="font-family:'EB Garamond',Georgia,serif;font-size:1.15rem;color:#f0ede8" data-l="it">Prenota un incontro</span>
+                <span style="font-family:'EB Garamond',Georgia,serif;font-size:1.15rem;color:#f0ede8" data-l="en">Book a meeting</span>
+                <button onclick="closeCal()" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:0;border:1px solid rgba(255,255,255,.06);border-radius:6px;color:#7a756d;cursor:pointer;padding:0;transition:all .2s" aria-label="Close">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div style="flex:1;overflow:auto;scrollbar-width:thin;scrollbar-color:#3b7dd8 #0e1219">
+                <iframe id="calFrame" src="about:blank" style="width:100%;height:100%;border:none" loading="lazy" allow="payment"></iframe>
+            </div>
+        </div>
+    </div>
+    <style>
+        #calOverlay.open{opacity:1!important;visibility:visible!important}
+        #calOverlay.open>div:last-child{transform:scale(1) translateY(0)!important}
+        #calOverlay *::-webkit-scrollbar{width:6px;height:6px}
+        #calOverlay *::-webkit-scrollbar-track{background:#0e1219;border-radius:3px}
+        #calOverlay *::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#3b7dd8,#c9a45c);border-radius:3px}
+        #calOverlay *::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#5a9af0,#d4b06a)}
+        #calOverlay *{scrollbar-width:thin;scro
